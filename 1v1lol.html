@@ -44,6 +44,13 @@
         }
       }
     </script>
+      <script>
+if (!localStorage.getItem('gameSave')) localStorage.setItem('gameSave', '{}');
+window.addEventListener('beforeunload', () => {
+    localStorage.setItem('gameSave', JSON.stringify(window.gameData || {}));
+});
+window.gameData = JSON.parse(localStorage.getItem('gameSave'));
+</script>
   
 
 
