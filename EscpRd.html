@@ -271,22 +271,26 @@ window.gtag("config", firebaseConfig.measurementId, {
 
   const app = firebase.initializeApp(firebaseConfig);
   const auth = getAuth(app);
-</script>
-<script src="rocket-loader.min.js" data-cf-settings="57480f3f31f76c75506c83a0-|49" defer></script></body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: transparent;
+<script>
+const saveKey = location.hostname + '_' + location.pathname;
+
+if (!localStorage.getItem(saveKey)) localStorage.setItem(saveKey, '{}');
+
+// Merge old gameState with new
+window.gameState = {
+    ...(window.gameState || {}),
+    ...JSON.parse(localStorage.getItem(saveKey))
+};
+
+window.saveGame = () => {
+    localStorage.setItem(saveKey, JSON.stringify(window.gameState || {}));
+};
+
+// Auto-save when page closes
+if (!window._gameSaveListenerAdded) {
+    window.addEventListener('beforeunload', () => {
+        window.saveGame();
+    });
+    window._gameSaveListenerAdded = true;
 }
-  <script>
-if (!localStorage.getItem('gameSave')) localStorage.setItem('gameSave', '{}');
-window.addEventListener('beforeunload', () => {
-    localStorage.setItem('gameSave', JSON.stringify(window.gameData || {}));
-});
-window.gameData = JSON.parse(localStorage.getItem('gameSave'));
 </script>
