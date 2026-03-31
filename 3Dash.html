@@ -4,8 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Geometry Dash 3D</title>
-<link rel="icon" href="logo.png" type="image/png">
-<base href="https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/">
+<link rel="icon" href="https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/logo.png">
 <style>
 html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#000;}
 canvas { width:100%; height:100%; display:block; }
@@ -17,13 +16,13 @@ canvas { width:100%; height:100%; display:block; }
 <script>
 const canvas = document.getElementById("unity-canvas");
 
-const loaderUrl = "Build/GeometryDash.loader.js";
+const loaderUrl = "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.loader.js";
 
 const config = {
-    dataUrl: "Build/GeometryDash.data.unityweb",
-    frameworkUrl: "Build/GeometryDash.framework.js.unityweb",
-    codeUrl: "Build/GeometryDash.wasm.unityweb",
-    streamingAssetsUrl: "StreamingAssets",
+    dataUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.data.unityweb",
+    frameworkUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.framework.js.unityweb",
+    codeUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.wasm.unityweb",
+    streamingAssetsUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/StreamingAssets",
     companyName: "DefaultCompany",
     productName: "GeometryDash3d",
     productVersion: "0.1"
@@ -32,21 +31,11 @@ const config = {
 const script = document.createElement("script");
 script.src = loaderUrl;
 script.onload = () => {
-    createUnityInstance(canvas, config, progress => {
-        console.log((progress*100).toFixed(0) + "%");
-    }).then(unityInstance => {
-        console.log("loaded");
-    }).catch(err => console.error(err));
+    createUnityInstance(canvas, config, (p)=>console.log((p*100).toFixed(0)+"%"))
+      .then(()=>console.log("loaded"))
+      .catch(e=>console.error(e));
 };
 document.body.appendChild(script);
-</script>
-
-<script>
-if (!localStorage.getItem('gameSave')) localStorage.setItem('gameSave', '{}');
-window.addEventListener('beforeunload', () => {
-    localStorage.setItem('gameSave', JSON.stringify(window.gameData || {}));
-});
-window.gameData = JSON.parse(localStorage.getItem('gameSave'));
 </script>
 
 </body>
