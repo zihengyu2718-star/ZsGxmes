@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Geometry Dash 3D</title>
+<link rel="icon" href="https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/logo.png" type="image/png">
+<style>
+html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#000;}
+canvas { width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+<canvas id="unity-canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("unity-canvas");
+
+// Unity build URLs
+const loaderUrl = "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.loader.js";
+const config = {
+    dataUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.data.unityweb",
+    frameworkUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.framework.js.unityweb",
+    codeUrl: "https://cdn.jsdelivr.net/gh/bubbls/3dash@76613c9a94533ef9e6ba0e266ae18613700e3d02/Build/GeometryDash.wasm.unityweb",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "GeometryDash3d",
+    productVersion: "0.1"
+};
+
+// Load the Unity loader
+const script = document.createElement("script");
+script.src = loaderUrl;
+script.onload = () => {
+    createUnityInstance(canvas, config, progress => {
+        // optional: show progress
+        console.log("Loading progress:", (progress*100).toFixed(0) + "%");
+    }).then(unityInstance => {
+        console.log("Unity loaded!");
+    }).catch(err => console.error(err));
+};
+document.body.appendChild(script);
+</script>
+</body>
+</html>
