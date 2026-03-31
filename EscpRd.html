@@ -272,20 +272,19 @@ window.gtag("config", firebaseConfig.measurementId, {
   const app = firebase.initializeApp(firebaseConfig);
   const auth = getAuth(app);
 <script>
-const saveFile = 'https://cdn.jsdelivr.net/gh/zihengyu2718-star/ZsGxmes@main/save.json';
+const saveKey = window.location.href;
 
-async function loadProgress(gameName) {
-  try {
-    const res = await fetch(saveFile);
-    const data = await res.json();
-    return data.gameProgress[gameName] || {};
-  } catch {
-    const stored = localStorage.getItem('game_' + gameName);
-    return stored ? JSON.parse(stored) : {};
+window.addEventListener('beforeunload', () => {
+  const data = JSON.stringify(window.gameData || {});
+  localStorage.setItem(saveKey, data);
+});
+
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem(saveKey);
+  if(saved) {
+    window.gameData = JSON.parse(saved);
+  } else {
+    window.gameData = {};
   }
-}
-
-function saveProgress(gameName, progressObj) {
-  localStorage.setItem('game_' + gameName, JSON.stringify(progressObj));
-}
+});
 </script>
