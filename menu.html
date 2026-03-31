@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Z’s Games</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #cce7ff; margin: 0; padding: 30px 20px; }
+    .search-container { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; gap: 10px; }
+    .search-input { width: 100%; max-width: 1200px; padding: 12px 15px; font-size: 16px; border-radius: 20px; border: 2px solid #3399ff; box-shadow: 0 0 6px #66b3ff; outline: none; box-sizing: border-box; }
+    .search-circle { width: 10%; min-width: 50px; max-width: 120px; aspect-ratio: 1 / 1; border-radius: 50%; background-color: #99ccff; border: 2px solid #3399ff; box-shadow: 0 0 6px #66b3ff; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 12px; color: black; }
+    .container { max-width: 1200px; margin: auto; }
+    .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; }
+    .box { background-color: #99ccff; border-radius: 8px; text-decoration: none; color: black; font-weight: bold; text-align: center; transition: 0.2s; display: flex; flex-direction: column; align-items: center; overflow: hidden; border: 2px solid #3399ff; box-shadow: 0 0 6px #66b3ff; cursor: pointer; }
+    .box img { width: 100%; height: 100px; object-fit: cover; border-bottom: 2px solid #3399ff; box-shadow: 0 2px 6px #66b3ff inset; }
+    .box span { display: block; padding: 8px 5px; font-size: 14px; }
+    .box:hover { background-color: #66b3ff; transform: scale(1.03); box-shadow: 0 0 10px #3399ff; }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="searchBar" class="search-input" placeholder="Search..." onkeyup="filterGames()">
+    <div class="search-circle">Z’s Games</div>
+  </div>
+  <div class="container">
+    <div class="grid" id="gameGrid"></div>
+  </div>
+  <script>
+    const games = [
+      { name: "Game 1", link: "https://cdn.jsdelivr.net/gh/zihengyu2718-star/3Dash@main/game1.html", img: "https://via.placeholder.com/150/99ccff/ffffff" },
+      { name: "Game 2", link: "https://cdn.jsdelivr.net/gh/zihengyu2718-star/3Dash@main/game2.html", img: "https://via.placeholder.com/150/99ccff/ffffff" },
+      { name: "Game 3", link: "https://cdn.jsdelivr.net/gh/zihengyu2718-star/3Dash@main/game3.html", img: "https://via.placeholder.com/150/99ccff/ffffff" }
+    ];
+    const grid = document.getElementById("gameGrid");
+    function openGame(url){
+      const win = window.open(url,"_blank");
+      win.addEventListener("load",()=>{win.document.title="GAME - DONT PLAY IN CLASS";const l=win.document.createElement("link");l.rel="icon";l.href="https://cdn.jsdelivr.net/gh/zihengyu2718-star/3Dash@main/exclamation.ico";win.document.head.appendChild(l);});
+    }
+    function renderGames(list){
+      grid.innerHTML="";
+      list.forEach(g=>{
+        const box=document.createElement("div");
+        box.className="box";
+        box.onclick=()=>openGame(g.link);
+        box.innerHTML=`<img src="${g.img}" alt="${g.name}"><span>${g.name}</span>`;
+        grid.appendChild(box);
+      });
+    }
+    function filterGames(){
+      const input=document.getElementById("searchBar").value.toLowerCase();
+      renderGames(games.filter(g=>g.name.toLowerCase().includes(input)));
+    }
+    renderGames(games);
+  </script>
+</body>
+</html>
