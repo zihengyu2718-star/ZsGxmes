@@ -272,25 +272,20 @@ window.gtag("config", firebaseConfig.measurementId, {
   const app = firebase.initializeApp(firebaseConfig);
   const auth = getAuth(app);
 <script>
-const saveKey = location.hostname + '_' + location.pathname;
+const saveFile = 'https://cdn.jsdelivr.net/gh/YOURUSERNAME/YOURREPO@main/save.json';
 
-if (!localStorage.getItem(saveKey)) localStorage.setItem(saveKey, '{}');
+async function loadProgress(gameName) {
+  try {
+    const res = await fetch(saveFile);
+    const data = await res.json();
+    return data.gameProgress[gameName] || {};
+  } catch {
+    const stored = localStorage.getItem('game_' + gameName);
+    return stored ? JSON.parse(stored) : {};
+  }
+}
 
-// Merge old gameState with new
-window.gameState = {
-    ...(window.gameState || {}),
-    ...JSON.parse(localStorage.getItem(saveKey))
-};
-
-window.saveGame = () => {
-    localStorage.setItem(saveKey, JSON.stringify(window.gameState || {}));
-};
-
-// Auto-save when page closes
-if (!window._gameSaveListenerAdded) {
-    window.addEventListener('beforeunload', () => {
-        window.saveGame();
-    });
-    window._gameSaveListenerAdded = true;
+function saveProgress(gameName, progressObj) {
+  localStorage.setItem('game_' + gameName, JSON.stringify(progressObj));
 }
 </script>
