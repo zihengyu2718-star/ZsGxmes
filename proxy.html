@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultra Search</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lexend', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #0d0d0d;
+  color: #fff;
+}
+header {
+  padding: 20px;
+  text-align: center;
+}
+h1 {
+  margin: 0 0 15px 0;
+  font-size: 28px;
+}
+form {
+  display: flex;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto 15px auto;
+}
+input[type="text"] {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 10px 0 0 10px;
+  border: none;
+  font-size: 16px;
+}
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 0 10px 10px 0;
+  background-color: #00ff7f;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+button:hover {
+  background-color: #00cc66;
+}
+iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-top: 1px solid #333;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ultra Search</h1>
+  <form id="searchForm">
+    <input type="text" id="query" placeholder="Type your search..." required>
+    <button type="submit">Search</button>
+  </form>
+</header>
+
+<iframe id="resultsFrame" src="about:blank"></iframe>
+
+<script>
+const form = document.getElementById('searchForm');
+const iframe = document.getElementById('resultsFrame');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const query = document.getElementById('query').value.trim();
+  if(!query) return;
+  // Load DuckDuckGo search results in the iframe
+  iframe.src = "https://lite.duckduckgo.com/lite/?q=" + encodeURIComponent(query);
+});
+</script>
+
+</body>
+</html>
