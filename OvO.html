@@ -194,3 +194,20 @@
     <script src="https://cdn.jsdelivr.net/gh/Arjun99ab/ovo@main/src/modloaders/modloader.js" id="modloader" type="module" defer></script>
 </body> 
 </html> 
+<script>
+const saveKey = window.location.href;
+
+window.addEventListener('beforeunload', () => {
+  const data = JSON.stringify(window.gameData || {});
+  localStorage.setItem(saveKey, data);
+});
+
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem(saveKey);
+  if(saved) {
+    window.gameData = JSON.parse(saved);
+  } else {
+    window.gameData = {};
+  }
+});
+</script>
